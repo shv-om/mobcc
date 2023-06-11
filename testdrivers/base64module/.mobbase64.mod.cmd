@@ -1,0 +1,1 @@
+cmd_/home/mob/internship/testdrivers/base64module/mobbase64.mod := { echo  /home/mob/internship/testdrivers/base64module/mobbase64.o;  echo; } > /home/mob/internship/testdrivers/base64module/mobbase64.mod

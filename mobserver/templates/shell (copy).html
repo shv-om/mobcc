@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} Interactive shell {% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="my-4">Interactive Shell</h1>
+    <form id="shell-form" method="POST" action="{% url 'interactive_shell' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Start Shell</button>
+    </form>
+    <div id="output-container" class="mt-4">
+      <!-- Output from shell will be displayed here via Ajax -->
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    $(function() {
+      $('#shell-form').submit(function(event) {
+        event.preventDefault(); // prevent form submission
+        var form_data = $(this).serialize(); // get form data
+        $.ajax({
+          type: 'POST',
+          url: '{% url "interactive_shell" %}',
+          data: form_data,
+          success: function(data) {
+            $('#output-container').append('<p>' + data.output + '</p>');
+          },
+          error: function(xhr, status, error) {
+            $('#output-container').append('<p>Error: Could not connect to device</p>');
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}

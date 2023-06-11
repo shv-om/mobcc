@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div style="padding:3rem;">
+    <h1 class="text-center">Commands</h1>
+  </div>
+
+  <div class="row">
+    <div class="col text-start">
+      {% if commands %}
+        <ul>
+          {% for command in commands %}
+            <li>
+              <strong>{{ command.device }}: {{ command.command }}: {{ command.response }}</strong>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No commands have been sent yet.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

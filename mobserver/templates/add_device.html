@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div style="padding:3rem;">
+    <h1>Add a New Device</h1>
+  </div>
+  
+  <form class="row g-3 align-items-center" method="POST" action="{% url 'add_device' %}">
+    <div class="col">
+      <div class="input-group mb-3">
+          {% csrf_token %}
+          {{ form.name }}
+        <input class="form-control" type="hidden" name="ip_address" value="{{ user_ip }}">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}

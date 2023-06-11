@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="p-5">
+  <h1 class="text-center">Mob CC</h1>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h3>Steps:</h3>
+    <ul class="text-start">
+      <li>1: Add Devices using the below link.</li>
+      <li>2: Select the added Device and send commands.</li>
+      <li>3: Send Commands and get Interactive shell.</li>
+      <li>4: Get root access by invoking the kernel rootkit.</li>
+    </ul>
+  </div>
+
+  <div class="col">
+    <h3>Add Device:</h3>
+    <p>Add new device by manually filling the form or using kernel rootkit to automatically add this device to the C2 server.</p>
+    <a class="btn btn-outline-secondary" role="button" aria-disabled="true" href="{% url 'add_device' %}">Add new device</a>
+  </div>
+
+  <div class="col">
+    <h3>Send Commands:</h3>
+    <form method="POST" class="text-star">
+      {% csrf_token %}
+      <label for="device">Select a Device:</label>
+      <div class="row">
+        <div class="col">
+          <div class="input-group">
+            <select class="form-select" name="device" id="device">
+              <option selected>Choose...</option>
+              {% for device in devices %}
+              <option value="{{ device.id }}">{{ device.name }}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btn-outline-secondary" type="submit">Let's Go</button>
+          </div>
+          <!-- <select name="device" id="device">
+            {% for device in devices %}
+            <option value="{{ device.id }}">{{ device.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col">
+          <input type="submit" value="Let's Go">
+        </div> -->
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

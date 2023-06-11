@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %} Interactive shell {% endblock %}
+
+{% block content %}
+  <!DOCTYPE html>
+    <h1>Interactive Shell</h1>
+    <div>
+        <form id="command-form">
+            <input type="text" id="command-input">
+            <input type="submit" value="Execute">
+        </form>
+        <div id="output"></div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            var socket = new WebSocket("ws://{{ request.get_host }}/ws/interactive_shell/{{ device.id }}/");
+            socket.onopen = function() {
+                console.log("Connected to server");
+            };
+            socket.onclose = function(event) {
+                console.log("Connection closed: ", event);
+            };
+            socket.onerror = function(error) {
+                console.log("Error: ", error);
+            };
+            socket.onmessage = function(event) {
+                $("#output").append("<pre>" + event.data + "</pre>");
+            };
+
+            $("#command-form").submit(function(event) {
+                event.preventDefault();
+                var command = $("#command-input").val();
+                socket.send(command);
+                $("#command-input").val("");
+            });
+        });
+    </script>
+{% endblock %}
