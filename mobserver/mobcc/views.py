@@ -8,6 +8,26 @@ from .forms import AddDeviceForm, SendCommandForm
 import requests
 
 
+def help_view(request):
+    return render(request, 'help.html', {})
+
+
+def home_view(request):
+    devices = Device.objects.all()
+    if request.method == 'POST':
+        device_id = request.POST.get('device')
+        return redirect('send_command', device_id=device_id)
+    context = {
+        'devices': devices,
+    }
+    return render(request, 'home.html', context)
+
+
+def commands_list(request):
+    commands = Command.objects.all()
+    return render(request, 'command_list.html', {'commands': commands})
+
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -15,6 +35,7 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
 
 @csrf_exempt
 def add_device_view(request):
@@ -29,22 +50,6 @@ def add_device_view(request):
         form = AddDeviceForm()
     context = {'form': form}
     return render(request, 'add_device.html', context)
-
-
-def commands_list(request):
-    commands = Command.objects.all()
-    return render(request, 'command_list.html', {'commands': commands})
-
-
-def home_view(request):
-    devices = Device.objects.all()
-    if request.method == 'POST':
-        device_id = request.POST.get('device')
-        return redirect('send_command', device_id=device_id)
-    context = {
-        'devices': devices,
-    }
-    return render(request, 'home.html', context)
 
 
 def send_command_view(request, device_id):
