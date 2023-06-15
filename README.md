@@ -42,5 +42,6 @@ Mob CC is a post exploitation framework containing a Linux kernel rootkit, C2 se
 ---
 
 
-Resource: Linux Kernel rootkit
-https://xcellerator.github.io/posts/linux_rootkits_01/
+Resources:
+
+Learn how to create Linux Kernel modules: https://xcellerator.github.io/posts/linux_rootkits_01/
