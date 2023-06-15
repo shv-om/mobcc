@@ -26,6 +26,11 @@ Mob CC is a post exploitation framework containing a Linux kernel rootkit, C2 se
 
 ---
 
+# Screenshots:
+  ![Home Page](/images/mobcc_home.png)
+
+---
+
 # Note:
   - Note that if you kill the reverse shell process then you have to install the kernel rootkit module again into the target system.
   - No one can remove the module if it's hidden.

