@@ -1,1 +1,0 @@
-cmd_/home/mob/internship/testdrivers/base64module/mobbase64.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/mob/internship/testdrivers/base64module/mobbase64.ko /home/mob/internship/testdrivers/base64module/mobbase64.o /home/mob/internship/testdrivers/base64module/mobbase64.mod.o;  true
