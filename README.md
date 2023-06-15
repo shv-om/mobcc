@@ -1,14 +1,6 @@
 # mobcc
 
-Mob CC is a framework containing a Linux kernel rootkit, C2 server and Reverse shell with network scanning capabilities.
-
-1. Add Devices using the below link. (If you are using the kernel module then this step will be automatically done by that.)
-
-2. Select the added Device and start sending commands to the target system.
-
-3. As you may directly get root access but incase you don't get root access then check commands to gain root privilege.
-
-4. You can also spawn a new shell and transfer it to any other attacking system by giving the IP of the attacking system.
+Mob CC is a post exploitation framework containing a Linux kernel rootkit, C2 server and Reverse shell with network scanning capabilities.
 
 ---
 
