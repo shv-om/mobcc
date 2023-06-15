@@ -27,7 +27,17 @@ Mob CC is a post exploitation framework containing a Linux kernel rootkit, C2 se
 ---
 
 # Screenshots:
+  ## Home Page
   ![Home Page](/images/mobcc_home.png)
+
+  ## Send Commands
+  ![Send Commands](/images/connect_mob_client.png)
+
+  ## Scan Network
+  ![Scan Network](/images/scanning_network.png)
+
+  ## Spawn Shell
+  ![Spawn Shell](/images/spawn_newshell.png)
 
 ---
 
