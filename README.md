@@ -4,8 +4,8 @@ Mob CC is a post-exploitation framework containing a Linux kernel rootkit, C2 se
 
 ---
 
-## Usage:
-### Attacking side:
+## Setup:
+## Attacking side:
   - Download and install Django in your attacking system. 'pip install Django'
   - Download the mobserver directory. You can delete the database file (i.e., db.sqlite3)
   - Change the directory to mobserver ( cd /path/to/mobserver/ ) and delete all migration directories from the app directory.
@@ -23,11 +23,21 @@ Mob CC is a post-exploitation framework containing a Linux kernel rootkit, C2 se
     `base64 mob_client.py`
   - Copy the base64 string and paste it in the place of the default string in 'mob.c'.
   
-### Target Side:
+## Target Side:
   - Download the 'mob.c', 'make', and 'ftrace_helper.h' files and build the module using the make command (Make sure of the kernel version of the target system).  
   - Install the kernel module (mob.ko) using the insmod command. (This step should be done after the C&C server runs on the attacking machine)
 
   `sudo insmod mob.ko`
+
+  - If everything is setup correctly (including the IP address) then after installing the rootkit you will get your target device name in the device list in home page.
+
+---
+
+## Usage:
+  - Open the C&C server on your browser.
+  - If you have already installed the rootkit on the target side then there will be your target device name in device list.
+  - Select device and connect.
+  - Send commands and recieve responses. You can check the help page for listed additional features.
 
 ---
 
