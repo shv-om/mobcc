@@ -15,7 +15,7 @@ Mob CC is a post-exploitation framework containing a Linux kernel rootkit, C2 se
     python3 ./manage.py migrate
 
   ### Run server:
-    python3 ./manage.py runserver <IP> <port>
+    python3 ./manage.py runserver <IP>:<port>
 
 #### Note:
   - You can modify the IP address of the attacking machine.
