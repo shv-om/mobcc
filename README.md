@@ -92,7 +92,3 @@ Mob CC is a post-exploitation framework containing a Linux kernel rootkit, C2 se
   - To gain root privilege in the target machine from any other attacking machine using a reverse shell-like above. 'kill -64 1'
 
 ---
-
-
-# Resources:
-Learn how to create Linux Kernel modules: https://xcellerator.github.io/posts/linux_rootkits_01/
